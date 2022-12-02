@@ -11,10 +11,10 @@ HOEJDE = 800
 SPORLAENGDE = 200
 MOVEMENT_SPEED = 3
 TYNGDEKRAFT = 0
-SPILKØRER = True
+SPILKOERER = True
 XD = False
 
-#vi bestmmer klassen for Planeter
+#vi bestemmer klassen for Planeter
 class Planet:
     def __init__(self , centrum_x, centrum_y, radius, farve):
         self.centrum_x = centrum_x
@@ -24,7 +24,7 @@ class Planet:
 
     def tegn(self):
         arcade.draw_circle_filled(self.centrum_x,self.centrum_y,self.radius,self.farve)
-#vi bestmmer klassen for "landingsbanen"
+#vi bestemmer klassen for "landingsbanen"
 class Landingsbane:
     def __init__(self,cen_x,cen_y,bredde,hoejde,farve):
         self.cen_x = cen_x
@@ -35,7 +35,7 @@ class Landingsbane:
 
     def tegn(self):
         arcade.draw_rectangle_filled(self.cen_x,self.cen_y,self.bredde,self.hoejde,self.farve)
-#vi bestmmer klassen for kanonen
+#vi bestemmer klassen for kanonen
 class Kanon:
 
     def __init__(self,start_x,start_y,slut_x,slut_y,skift_x,skift_y,farve,linje_bredde):
@@ -93,15 +93,15 @@ class Skud:
         vx, vy = self.retningsvektor
         x += vx * delta_tid
         y += vy * delta_tid
-        # vi trækker tyngdekraften fra y koordinatet for skudet
+        # vi trækker tyngdekraften fra y koordinatet for skuddet
         y -= TYNGDEKRAFT* x**2 * delta_tid
-        # vi bestemmer at tyngdekraften først får en værdi og effekt når skudet er ude af kanonen
+        # vi bestemmer at tyngdekraften først får en værdi og effekt når skuddet er ude af kanonen
         if x > BREDDE/4+90:
             XD = True
         if XD == True:
             TYNGDEKRAFT += 0.0000012
 
-#vi gør så skudet stopper op hvis det rammer kanterne af vinduet
+#vi gør så skuddet stopper op hvis det rammer kanterne af vinduet
         self.punkt = (x, y)
 
         if x > BREDDE:
@@ -127,7 +127,7 @@ class MitSpil(arcade.Window):
         arcade.set_background_color(arcade.color.BLACK)
 
     def setup(self):
-        #i setup giver vi værdierne til vores forskellige obejekter vha. de klasser vi har bestemt
+        #i setup giver vi værdierne til vores forskellige objekter vha. de klasser vi har bestemt
         self.planet = Planet(BREDDE/4,HOEJDE/2,50,arcade.color.BEAVER)
         self.planet2=Planet(BREDDE/1.25,HOEJDE/2,50,arcade.color.RUBY)
         self.planet3 = Planet(BREDDE/2,0,150,arcade.color.SAGE)
@@ -147,9 +147,9 @@ class MitSpil(arcade.Window):
 
 # vi bestemmer hvad de forskellige knapper gør
     def on_key_press(self, key, modifiers,):
-        global SPILKØRER
-        if SPILKØRER:
-#vi bestemmer længden af kanonen som skudets hastighed er afhænig af
+        global SPILKOERER
+        if SPILKOERER:
+#vi bestemmer længden af kanonen som skuddets hastighed er afhængig af
             kanonlaengde = math.sqrt((self.kanon.slut_x - self.kanon.start_x) ** 2 + (self.kanon.slut_y - self.kanon.start_y) ** 2)
             if key == arcade.key.LEFT:
                 #når vi klikker på den venstre piltast bliver x-værdien for kanonen mindre
@@ -170,13 +170,11 @@ class MitSpil(arcade.Window):
                 print(f"hastigheden af skuden bliver {kanonlaengde}")
                 print(f"vektor = {self.kanon.slut_x - self.kanon.start_x},{self.kanon.slut_y - self.kanon.start_y}")
             elif key == arcade.key.SPACE:
-#når vi trykker på spacebaren skyder skudet med vektoren af kanonen og hastigheden af længden af kanonen
-#når vi skydder sætter vi også SPILKØRER = falsk så vi ikke kan ændre klikke på tasterne med en effekt
-                    self.skud.retningsvektor
+#når vi trykker på spacebaren skyder skuddet med vektoren af kanonen og hastigheden af længden af kanonen
+#når vi skyder sætter vi også SPILKOERER = falsk så vi ikke kan ændre klikke på tasterne med en effekt
                     self.skud.retningsvektor = self.kanon.slut_x-self.kanon.start_x,self.kanon.slut_y-self.kanon.start_y
                     print(f"vektor = {self.kanon.slut_x-self.kanon.start_x},{self.kanon.slut_y-self.kanon.start_y}")
-                    global TYNGDEKRAFT
-                    SPILKØRER = False
+                    SPILKOERER = False
 
         else:
             pass
